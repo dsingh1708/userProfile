@@ -51,7 +51,7 @@ sequelize
 
 // Authentication and Authorization Middleware
 var auth = function(req, res, next) {
-  if (req.session && req.session.user === req.body.email && req.session.pwd === req.body.pwd)
+  if (req.session && req.session.user_profiles === req.body.email && req.session.pwd === req.body.pwd)
     return next();
   else
     return res.sendStatus(401);
@@ -64,13 +64,13 @@ var auth = function(req, res, next) {
    var data = {
         "Data":""
     };
-     sequelize.query("SELECT * FROM user", { type: sequelize.QueryTypes.SELECT})
-  .then(function(user,err,rows,fields) {
+     sequelize.query("SELECT * FROM user_profiles", { type: sequelize.QueryTypes.SELECT})
+  .then(function(user_profiles,err,rows,fields) {
     // We don't need spread here, since only the results will be returned for select queries
     //if(rows.length!=0){
-    if(user){
+    if(user_profiles){
     
-           data["Data"] = user;
+           data["Data"] = user_profiles;
             // data["Data"] = rows;
             res.json({"err" : false, "message" : "success",data});
            // res.json(data);
@@ -96,8 +96,8 @@ app.post('/Post',function(req,res){
    //if(!!firstname && !!lastname && !!pwd && !!confirmPwd)
   if(!!firstname && !!lastname && !!pwd && !!confirmpwd && !!email && !!phone) 
     {
-//sequelize.query("INSERT INTO user(firstname,lastname,pwd,confirmPwd) VALUES('" + firstname+ "','" + lastname+ "','" + pwd + "','" + confirmPwd+ "')",[firstname,lastname,pwd,confirmPwd],{type: sequelize.QueryTypes.INSERT}).then(function(user,err) {
-  sequelize.query("INSERT INTO user (firstname,lastname,pwd,confirmpwd,email,phone) VALUES('" + firstname+ "','" + lastname+ "','" + pwd + "','" + confirmpwd+ "','" + email+ "','" + phone+ "')",[firstname,lastname,pwd,confirmpwd,email,phone],{type: sequelize.QueryTypes.INSERT}).then(function(user,err) {
+//sequelize.query("INSERT INTO user_profiles(firstname,lastname,pwd,confirmPwd) VALUES('" + firstname+ "','" + lastname+ "','" + pwd + "','" + confirmPwd+ "')",[firstname,lastname,pwd,confirmPwd],{type: sequelize.QueryTypes.INSERT}).then(function(user_profiles,err) {
+  sequelize.query("INSERT INTO user_profiles (firstname,lastname,pwd,confirmpwd,email,phone) VALUES('" + firstname+ "','" + lastname+ "','" + pwd + "','" + confirmpwd+ "','" + email+ "','" + phone+ "')",[firstname,lastname,pwd,confirmpwd,email,phone],{type: sequelize.QueryTypes.INSERT}).then(function(user_profiles,err) {
     
  if(!!err){ 
  // if(!!err){
